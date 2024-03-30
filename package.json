@@ -1,8 +1,11 @@
 {
-  "name": "@marjanahmed/cli-atm",
-  "version": "3.0.0",
+  "name": "@marjanahmed/cli-atm-machine",
+  "version": "2.0.0",
   "description": "",
   "main": "atmApp.js",
+  "publishConfig": {
+    "access": "public"
+  },
   "type": "module",
   "bin": {
     "cli-atm": "./atmApp.js"
@@ -12,7 +15,7 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "dependencies": {
     "@types/node": "^20.11.30",
     "inquirer": "^9.2.16"

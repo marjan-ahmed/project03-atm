@@ -1,62 +1,89 @@
+#! usr/bin/env node
 import inquirer from "inquirer";
-import chalk from "chalk";
 
-console.log(chalk.bgBlue("Welcome To Marjan ATM Machine"));
-console.log("\n");
+const myPin = 3623;
+const myBalance = 15000; //Ponds
 
-let balance : number = 20000 //in Dollar
+console.log("Welcome to ATM machine (by Marjan Ahmed)");
 
-console.log(`You Balance is ${balance}`);
-
-//my ATM pin
-const myPin : number = 3623;
-
-const userInputPin = await inquirer.prompt([
+const question1 = await inquirer.prompt([
     {
-        name: "userPin",
+        name: "pin",
         type: "number",
         message: "Enter your pin:"
     }
 ]);
 
-if(userInputPin.userPin === myPin){
-    console.log(chalk.blue("Correct Pin!"));
+if(question1.pin === myPin){
+    console.log("Correct Pin!");
     console.log("\t");
-    console.log("What do you want to do?");
 
-    const option = await inquirer.prompt([
+    const question2 = await inquirer.prompt([
         {
-            name: "userOpt",
+            name: "cashSys",
             type: "list",
-            choices: ['Withdraw','Check balance'],
-            message: "Enter your choice:"
+            choices: ['Cash Withdrawal', 'Check Balance'],
+            message: "Enter your payment method:"
         }
     ]);
-    
-    if(option.userOpt === 'Withdraw'){
-        const withdraw = await inquirer.prompt([
+
+    console.log("\t");
+
+    if(question2.cashSys === 'Cash Withdrawal'){
+
+        const withdrawal = await inquirer.prompt([
             {
-                name: "userWithdraw",
+                name: "userCash",
                 type: "list",
-                choices: [500,1000,5000,1000,15000,],
-                message: "Enter your amount:"
+                choices: ['Fast Cash', 'User Amount'],
+                message: "Enter your cash withdrawal method:"
+                
             }
         ]);
 
-        const totalAmount = balance - withdraw.userWithdraw;
-        console.log(chalk.green(`${totalAmount} are left in your balance`));
-        console.log(chalk.yellow("Thank you for visiting our ATM"));
-    };
+        console.log("\t");
 
-    if(option.userOpt === 'Check balance')
-    {
-        console.log(chalk.green(`Your current balance is ${balance}`));
-        console.log(chalk.yellow("Thank you for visiting our ATM"));
+        if(withdrawal.userCash === 'Fast Cash'){
+
+            const fastCashMeth = await inquirer.prompt([
+                {
+                    name: "userFastCash",
+                    type: "list",
+                    choices: [500,1000,5000,1000,15000,20000],
+                    message: "Enter your amount:"
+                }
+            ]);
+
+            console.log("\t");
+
+            const calculate = myBalance - fastCashMeth.userFastCash;
+            console.log("You Balance is",calculate); 
+        }
+
+        else if(withdrawal.userCash === 'User Amount'){
+            const userAmount = await inquirer.prompt([
+                {
+                    name: "userGivenAmount",
+                    type: "number",
+                    message: "Enter your amount:"
+                }
+            ]);
+
+            console.log("\t");
+
+            const calculate = myBalance - userAmount.userGivenAmount;
+            console.log("Your Balance is",calculate); 
+            console.log("\t");
+
+        }
     }
 
+    else if(question2.cashSys === 'Check Balance') 
+    {
+        console.log(`Your balance is ${myBalance}`);
+    }
+}
 
-}
 else{
-    console.log("\t");
-    console.log(chalk.red("Invalid Pin"));
-}
+    console.log("Invalid Pin");
+};

@@ -1,8 +1,11 @@
 #! usr/bin/env node
 import inquirer from "inquirer";
-const myPin = 3623;
+import chalk from "chalk";
+const myPin = 1234;
 const myBalance = 15000; //Ponds
-console.log("Welcome to ATM machine (by Marjan Ahmed)");
+console.log("\n");
+console.log(chalk.bgBlue.black.underline("***---------------Welcome to ATM machine (by Marjan Ahmed)---------------***"));
+console.log("\t");
 const question1 = await inquirer.prompt([
     {
         name: "pin",
@@ -38,12 +41,12 @@ if (question1.pin === myPin) {
                     name: "userFastCash",
                     type: "list",
                     choices: [500, 1000, 5000, 1000, 15000, 20000],
-                    message: "Enter your amount:"
+                    message: "Enter your transection amount:"
                 }
             ]);
             console.log("\t");
             const calculate = myBalance - fastCashMeth.userFastCash;
-            console.log("You Balance is", calculate);
+            console.log("Now you have", calculate, "pounds");
         }
         else if (withdrawal.userCash === 'User Amount') {
             const userAmount = await inquirer.prompt([
@@ -55,15 +58,16 @@ if (question1.pin === myPin) {
             ]);
             console.log("\t");
             const calculate = myBalance - userAmount.userGivenAmount;
-            console.log("Your Balance is", calculate);
+            console.log("Now you have", calculate, "pounds");
             console.log("\t");
         }
     }
     else if (question2.cashSys === 'Check Balance') {
-        console.log(`Your balance is ${myBalance}`);
+        console.log(chalk.green(`Your balance is ${myBalance}`));
     }
 }
 else {
-    console.log("Invalid Pin");
+    console.log("\t");
+    console.log(chalk.red("Invalid Pin"));
 }
 ;

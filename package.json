@@ -17,6 +17,7 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "@marjanahmed/todo-list-app": "^3.2.0",
     "@types/node": "^20.11.30",
     "inquirer": "^9.2.16"
   },
